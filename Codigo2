@@ -1,0 +1,26 @@
+LIST P=16F84A          ; Procesador utilizado
+    INCLUDE <P16F84A.INC>  ; Se definen las etiquetas del PIC
+
+    ; CONFIGURACIÓN DEL PIC
+    CONFIG  CP_OFF & WDT_OFF & PWRTE_ON & XT_OSC  ; Configuración para el grabador
+
+    ; ZONA DE DATOS
+    Constante EQU 0xFF       ; Valor constante para activar todas las salidas
+
+    ; ZONA DE CÓDIGOS
+    ORG 0                    ; El programa comienza en la dirección 0
+
+Inicio:
+    bsf STATUS, RP0          ; Acceso al Banco 1
+    clrf TRISA               ; Configurar todos los pines de PORTA como salida
+    clrf TRISB               ; Configurar todos los pines de PORTB como salida
+    bcf STATUS, RP0          ; Regresar al Banco 0
+
+    movlw Constante          ; Cargar el valor 0xFF (todos los bits en alto)
+    movwf PORTA              ; Escribir 0xFF en PORTA (todos los pines en alto)
+    movwf PORTB              ; Escribir 0xFF en PORTB (todos los pines en alto)
+
+Principal:
+    goto Principal           ; Bucle infinito
+
+    END                      ; Fin del programa
