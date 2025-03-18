@@ -1,0 +1,19 @@
+LIST P=16F84A          ; Especificamos el procesador
+    INCLUDE <P16F84A.INC>  ; Incluimos el archivo de definiciones del PIC
+
+    ORG 0                  ; El programa comienza en la dirección 0 de memoria
+
+Inicio:
+    bsf STATUS, RP0        ; Acceso al Banco 1
+    clrf TRISA             ; Configurar todos los pines del puerto A como salida
+    clrf TRISB             ; Configurar todos los pines del puerto B como salida
+    bcf STATUS, RP0        ; Acceso al Banco 0
+
+    movlw 0xFF             ; Cargar el valor 0xFF (todos los bits en alto)
+    movwf PORTA            ; Escribir 0xFF en PORTA (todos los pines en alto)
+    movwf PORTB            ; Escribir 0xFF en PORTB (todos los pines en alto)
+
+Bucle:
+    goto Bucle             ; Bucle infinito
+
+    END                    ; Fin del programa
